@@ -1,0 +1,220 @@
+X1 Business Layer Phase 1 Report
+Date: 2026-04-14
+
+1. Summary
+- Completed Business Layer Phase 1 for iFA using the existing independent repository:
+  /Users/neoclaw/repos/ifa-business-layer
+- Reused the standard unified virtual environment:
+  /Users/neoclaw/repos/ifa-data-platform/.venv
+- Did NOT create a new business-layer virtual environment.
+- Did NOT implement lowfreq / midfreq / archive collection logic.
+- Implemented and validated owner-scoped business objects for:
+  - key focus
+  - focus
+  - archive targets
+
+2. Standard venv check result
+- Actual standard iFA runtime / development venv in current use:
+  /Users/neoclaw/repos/ifa-data-platform/.venv
+- Evidence found in ifa-data-platform:
+  - IFA_COLLECTION_RUNBOOK.md uses `.venv`
+  - scripts/run_lowfreq_daemon.sh activates `.venv`
+  - scripts/send_lowfreq_monitor.sh activates `.venv`
+  - repo-local executables resolve to /Users/neoclaw/repos/ifa-data-platform/.venv/bin/python3.14
+- Business layer implementation reused this same venv for development, CLI execution, and tests.
+
+3. Repository decision
+- New independent business-layer repository exists and is the implementation target:
+  /Users/neoclaw/repos/ifa-business-layer
+- Repository name:
+  ifa-business-layer
+- Why separate repo:
+  - This is a business-control layer, not a collection-runtime layer.
+  - It owns owner-scoped business objects, default pools, and maintenance scripts.
+  - It should remain decoupled from lowfreq / midfreq / archive collection implementation.
+
+4. Scope implemented
+- Implemented / standardized the following business objects:
+  1) key focus
+  2) focus
+  3) archive targets
+- Supported categories in default objects:
+  - stock
+  - macro
+  - futures
+  - commodity
+  - precious_metal
+- Phase 1 default owner normalized to:
+  - owner_type=default
+  - owner_id=default
+
+5. Database tables in use
+Schema:
+- ifa2
+
+Tables:
+1) ifa2.focus_lists
+Columns:
+- id
+- owner_type
+- owner_id
+- list_type
+- name
+- asset_type
+- frequency_type
+- description
+- is_active
+- created_at
+- updated_at
+
+2) ifa2.focus_list_items
+Columns:
+- id
+- list_id
+- symbol
+- name
+- asset_category
+- priority
+- source
+- notes
+- is_active
+- created_at
+- updated_at
+
+3) ifa2.focus_list_rules
+Columns:
+- id
+- list_id
+- rule_key
+- rule_value
+- created_at
+- updated_at
+
+6. Default values written to database
+Owner:
+- owner_type=default
+- owner_id=default
+
+Lists written:
+1) default_key_focus
+- list_type=key_focus
+- frequency_type=none
+- asset_type=multi_asset
+- item_count=20
+
+2) default_focus
+- list_type=focus
+- frequency_type=none
+- asset_type=multi_asset
+- item_count=100
+
+3) default_archive_targets_minute
+- list_type=archive_targets
+- frequency_type=minute
+- asset_type=multi_asset
+- item_count=20
+
+4) default_archive_targets_15min
+- list_type=archive_targets
+- frequency_type=15min
+- asset_type=multi_asset
+- item_count=40
+
+5) default_archive_targets_daily
+- list_type=archive_targets
+- frequency_type=daily
+- asset_type=multi_asset
+- item_count=200
+
+Category coverage observed in DB:
+- default_key_focus: commodity,macro,precious_metal,stock
+- default_focus: commodity,futures,macro,precious_metal,stock
+- default_archive_targets_minute: commodity,macro,precious_metal,stock
+- default_archive_targets_15min: commodity,futures,macro,precious_metal,stock
+- default_archive_targets_daily: commodity,futures,macro,precious_metal,stock
+
+7. Core code files
+Repository root:
+- /Users/neoclaw/repos/ifa-business-layer
+
+Core files:
+- README.md
+- docs/BUSINESS_LAYER_DESIGN.md
+- ifa_business_layer/config.py
+- ifa_business_layer/constants.py
+- ifa_business_layer/db.py
+- ifa_business_layer/defaults.py
+- ifa_business_layer/repository.py
+- ifa_business_layer/schema.py
+- scripts/focus_cli.py
+- tests/test_business_layer_phase1.py
+
+8. Maintenance script coverage
+Primary maintenance CLI:
+- scripts/focus_cli.py
+
+Supported operations:
+- init-schema
+- seed-default
+- list-lists
+- list-items
+- add-list
+- delete-list
+- add-item
+- delete-item
+- bulk-upsert
+- bulk-delete
+
+This covers:
+- single-record CRUD for lists/items
+- batch upsert/delete for items
+- key focus / focus / archive target maintenance through the same CLI
+
+9. Boundary / design decisions
+- key_focus: smallest highest-conviction set; future high-frequency candidate pool
+- focus: broader operational/reporting set
+- archive_targets: history accumulation targets split by minute / 15min / daily frequency
+- list-level asset_type is kept as multi_asset for the default cross-asset pools
+- item-level asset_category is the precise business classification
+- owner schema is future-compatible for expansion to customer / account / org even though Phase 1 uses only default/default
+- future integration with symbol_universe should remain validation/enrichment oriented, not a blocker for non-stock business objects
+
+10. Tests executed
+Environment used for all test runs:
+- /Users/neoclaw/repos/ifa-data-platform/.venv
+
+Executed:
+1) schema init test
+2) default seed write test
+3) default owner behavior test
+4) list CRUD test
+5) item single CRUD test
+6) item bulk upsert test
+7) item bulk delete test
+8) cross-asset category coverage test
+9) CLI execution test
+10) venv-contained end-to-end pytest run
+
+Main command executed:
+- PYTHONPATH=/Users/neoclaw/repos/ifa-business-layer \
+  DATABASE_URL='postgresql+psycopg2://neoclaw@/ifa_db?host=/tmp' \
+  IFA_DB_SCHEMA=ifa2 \
+  /Users/neoclaw/repos/ifa-data-platform/.venv/bin/python -m pytest -q tests/test_business_layer_phase1.py
+
+Result:
+- 1 passed in 3.38s
+
+11. Current gaps
+- No migration history has been added yet inside ifa-business-layer; current implementation directly reuses the already-present ifa2 tables and applies schema initialization idempotently.
+- No weekly / monthly archive target granularity yet by design.
+- No collection-layer consumption integration yet by design.
+- No customer-specific owner presets yet by design; schema is ready but Phase 1 only seeds default/default.
+- No formal packaging cleanup yet; repo currently contains both root package files and partial src/ leftovers, so a follow-up cleanup pass is recommended.
+
+12. Final status
+- X1 Business Layer Phase 1: completed for the requested scope.
+- Separate business-layer repository: yes.
+- Unified venv rule respected: yes.
+- New business-layer venv created: no.
+- Data collection layer development performed: no.
+- Current blocker: none.
