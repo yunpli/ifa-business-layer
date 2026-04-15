@@ -1,0 +1,5 @@
+{
+  "task": "identity_check",
+  "question": "Who are you?",
+  "style": "brief"
+}

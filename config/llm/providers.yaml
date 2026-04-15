@@ -1,0 +1,12 @@
+providers:
+  jmr:
+    base_url: https://jmrai.net/
+    api_type: anthropic-messages
+    api_key_env: JMR_API_KEY
+    timeout_seconds: 60
+
+  jmr-oai:
+    base_url: https://jmrai.net/
+    api_type: openai-completions
+    api_key_env: JMR_API_KEY
+    timeout_seconds: 60
