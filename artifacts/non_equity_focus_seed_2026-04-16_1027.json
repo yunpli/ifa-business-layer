@@ -1,0 +1,383 @@
+{
+  "lists": [
+    {
+      "list_name": "default_futures_key_focus",
+      "list_type": "futures_key_focus",
+      "asset_type": "futures",
+      "target_size": 20,
+      "inserted_count": 0,
+      "unresolved_count": 9,
+      "inserted": [],
+      "unresolved": [
+        {
+          "root": "IF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "IH",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "IC",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "IM",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "TS",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "TF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "T",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "TL",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "reason": "only 0 resolvable symbols available from current DB/runtime truth",
+          "missing_slots": 20
+        }
+      ]
+    },
+    {
+      "list_name": "default_futures_focus",
+      "list_type": "futures_focus",
+      "asset_type": "futures",
+      "target_size": 40,
+      "inserted_count": 0,
+      "unresolved_count": 9,
+      "inserted": [],
+      "unresolved": [
+        {
+          "root": "IF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "IH",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "IC",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "IM",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "TS",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "TF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "T",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "TL",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "reason": "only 0 resolvable symbols available from current DB/runtime truth",
+          "missing_slots": 40
+        }
+      ]
+    },
+    {
+      "list_name": "default_commodity_key_focus",
+      "list_type": "commodity_key_focus",
+      "asset_type": "commodity",
+      "target_size": 20,
+      "inserted_count": 20,
+      "unresolved_count": 22,
+      "inserted": [
+        "SC0",
+        "TA2506.ZCE",
+        "MA2506.ZCE",
+        "CU0",
+        "CU2506.SHF",
+        "AL0",
+        "AL2506.SHF",
+        "ZN0",
+        "ZN2506.SHF",
+        "NI2506.SHF",
+        "RB0",
+        "RB2506.SHF",
+        "HC0",
+        "HC2506.SHF",
+        "I0",
+        "I2506.DCE",
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM0",
+        "JM2506.DCE"
+      ],
+      "unresolved": [
+        {
+          "root": "LU",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "FU",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "BU",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "PX",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "PF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SN",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "AO",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "FG",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SA",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SH",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "BR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "NR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "M",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "Y",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "P",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "OI",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "RM",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "C",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "CS",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "CF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "UR",
+          "reason": "no current DB/runtime contract truth found"
+        }
+      ]
+    },
+    {
+      "list_name": "default_commodity_focus",
+      "list_type": "commodity_focus",
+      "asset_type": "commodity",
+      "target_size": 40,
+      "inserted_count": 21,
+      "unresolved_count": 23,
+      "inserted": [
+        "SC0",
+        "TA2506.ZCE",
+        "MA2506.ZCE",
+        "CU0",
+        "CU2506.SHF",
+        "AL0",
+        "AL2506.SHF",
+        "ZN0",
+        "ZN2506.SHF",
+        "NI2506.SHF",
+        "RB0",
+        "RB2506.SHF",
+        "HC0",
+        "HC2506.SHF",
+        "I0",
+        "I2506.DCE",
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM0",
+        "JM2506.DCE",
+        "RU2506.SHF"
+      ],
+      "unresolved": [
+        {
+          "root": "LU",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "FU",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "BU",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "PX",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "PF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SN",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "AO",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "FG",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SA",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SH",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "BR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "NR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "M",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "Y",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "P",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "OI",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "RM",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "C",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "CS",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "CF",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "SR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "root": "UR",
+          "reason": "no current DB/runtime contract truth found"
+        },
+        {
+          "reason": "only 21 resolvable symbols available from current DB/runtime truth",
+          "missing_slots": 19
+        }
+      ]
+    },
+    {
+      "list_name": "default_precious_metal_key_focus",
+      "list_type": "precious_metal_key_focus",
+      "asset_type": "precious_metal",
+      "target_size": 20,
+      "inserted_count": 4,
+      "unresolved_count": 1,
+      "inserted": [
+        "AU0",
+        "AU2506.SHF",
+        "AG0",
+        "AG2506.SHF"
+      ],
+      "unresolved": [
+        {
+          "reason": "only 4 resolvable symbols available from current DB/runtime truth",
+          "missing_slots": 16
+        }
+      ]
+    },
+    {
+      "list_name": "default_precious_metal_focus",
+      "list_type": "precious_metal_focus",
+      "asset_type": "precious_metal",
+      "target_size": 40,
+      "inserted_count": 4,
+      "unresolved_count": 1,
+      "inserted": [
+        "AU0",
+        "AU2506.SHF",
+        "AG0",
+        "AG2506.SHF"
+      ],
+      "unresolved": [
+        {
+          "reason": "only 4 resolvable symbols available from current DB/runtime truth",
+          "missing_slots": 36
+        }
+      ]
+    }
+  ]
+}
