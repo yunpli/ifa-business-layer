@@ -1,0 +1,244 @@
+{
+  "lists": [
+    {
+      "list_name": "default_futures_key_focus",
+      "list_type": "futures_key_focus",
+      "asset_type": "futures",
+      "roots": [
+        "IF",
+        "IH",
+        "IC",
+        "IM",
+        "TS",
+        "TF",
+        "T",
+        "TL"
+      ],
+      "inserted_count": 0,
+      "target_size": 20,
+      "unresolved_count": 20,
+      "inserted": []
+    },
+    {
+      "list_name": "default_futures_focus",
+      "list_type": "futures_focus",
+      "asset_type": "futures",
+      "roots": [
+        "IF",
+        "IH",
+        "IC",
+        "IM",
+        "TS",
+        "TF",
+        "T",
+        "TL"
+      ],
+      "inserted_count": 0,
+      "target_size": 40,
+      "unresolved_count": 40,
+      "inserted": []
+    },
+    {
+      "list_name": "default_commodity_key_focus",
+      "list_type": "commodity_key_focus",
+      "asset_type": "commodity",
+      "roots": [
+        "SC",
+        "LU",
+        "FU",
+        "BU",
+        "CU",
+        "AL",
+        "ZN",
+        "NI",
+        "SN",
+        "AO",
+        "RB",
+        "HC",
+        "I",
+        "J",
+        "JM",
+        "TA",
+        "MA",
+        "SA",
+        "FG",
+        "RU",
+        "BR",
+        "NR",
+        "M",
+        "Y",
+        "P",
+        "OI",
+        "RM",
+        "C",
+        "CS",
+        "CF",
+        "SR",
+        "UR",
+        "PX",
+        "PF",
+        "SH"
+      ],
+      "inserted_count": 6,
+      "target_size": 20,
+      "unresolved_count": 14,
+      "inserted": [
+        {
+          "symbol": "CU0",
+          "name": "沪铜主连",
+          "priority": 1
+        },
+        {
+          "symbol": "AL0",
+          "name": "沪铝主连",
+          "priority": 2
+        },
+        {
+          "symbol": "ZN0",
+          "name": "沪锌主连",
+          "priority": 3
+        },
+        {
+          "symbol": "RB0",
+          "name": "螺纹钢主连",
+          "priority": 4
+        },
+        {
+          "symbol": "HC0",
+          "name": "热卷主连",
+          "priority": 5
+        },
+        {
+          "symbol": "SC0",
+          "name": "原油主连",
+          "priority": 6
+        }
+      ]
+    },
+    {
+      "list_name": "default_commodity_focus",
+      "list_type": "commodity_focus",
+      "asset_type": "commodity",
+      "roots": [
+        "SC",
+        "LU",
+        "FU",
+        "BU",
+        "CU",
+        "AL",
+        "ZN",
+        "NI",
+        "SN",
+        "AO",
+        "RB",
+        "HC",
+        "I",
+        "J",
+        "JM",
+        "TA",
+        "MA",
+        "SA",
+        "FG",
+        "RU",
+        "BR",
+        "NR",
+        "M",
+        "Y",
+        "P",
+        "OI",
+        "RM",
+        "C",
+        "CS",
+        "CF",
+        "SR",
+        "UR",
+        "PX",
+        "PF",
+        "SH"
+      ],
+      "inserted_count": 6,
+      "target_size": 40,
+      "unresolved_count": 34,
+      "inserted": [
+        {
+          "symbol": "CU0",
+          "name": "沪铜主连",
+          "priority": 1
+        },
+        {
+          "symbol": "AL0",
+          "name": "沪铝主连",
+          "priority": 2
+        },
+        {
+          "symbol": "ZN0",
+          "name": "沪锌主连",
+          "priority": 3
+        },
+        {
+          "symbol": "RB0",
+          "name": "螺纹钢主连",
+          "priority": 4
+        },
+        {
+          "symbol": "HC0",
+          "name": "热卷主连",
+          "priority": 5
+        },
+        {
+          "symbol": "SC0",
+          "name": "原油主连",
+          "priority": 6
+        }
+      ]
+    },
+    {
+      "list_name": "default_precious_metal_key_focus",
+      "list_type": "precious_metal_key_focus",
+      "asset_type": "precious_metal",
+      "roots": [
+        "AU",
+        "AG"
+      ],
+      "inserted_count": 2,
+      "target_size": 20,
+      "unresolved_count": 18,
+      "inserted": [
+        {
+          "symbol": "AU0",
+          "name": "沪金主连",
+          "priority": 1
+        },
+        {
+          "symbol": "AG0",
+          "name": "沪银主连",
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "list_name": "default_precious_metal_focus",
+      "list_type": "precious_metal_focus",
+      "asset_type": "precious_metal",
+      "roots": [
+        "AU",
+        "AG"
+      ],
+      "inserted_count": 2,
+      "target_size": 40,
+      "unresolved_count": 38,
+      "inserted": [
+        {
+          "symbol": "AU0",
+          "name": "沪金主连",
+          "priority": 1
+        },
+        {
+          "symbol": "AG0",
+          "name": "沪银主连",
+          "priority": 2
+        }
+      ]
+    }
+  ]
+}
