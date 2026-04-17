@@ -10,7 +10,7 @@ from sqlalchemy import create_engine, text
 
 DB_URL = 'postgresql+psycopg2://neoclaw@/ifa_db?host=/tmp'
 engine = create_engine(DB_URL)
-OUT = Path('artifacts/non_equity_focus_seed_2026-04-16_1027.json')
+OUT = Path('artifacts/non_equity_focus_seed_2026-04-16_1035.json')
 
 LIST_SPECS = [
     ('default_futures_key_focus', 'futures_key_focus', 'futures', 20, ['IF', 'IH', 'IC', 'IM', 'TS', 'TF', 'T', 'TL']),
@@ -25,10 +25,13 @@ SOURCE_QUERIES = [
     ("futures_history", "select distinct ts_code as symbol from ifa2.futures_history"),
     ("futures_15min_history", "select distinct ts_code as symbol from ifa2.futures_15min_history"),
     ("futures_minute_history", "select distinct ts_code as symbol from ifa2.futures_minute_history"),
+    ("futures_60min_history", "select distinct ts_code as symbol from ifa2.futures_60min_history"),
     ("commodity_15min_history", "select distinct ts_code as symbol from ifa2.commodity_15min_history"),
     ("commodity_minute_history", "select distinct ts_code as symbol from ifa2.commodity_minute_history"),
+    ("commodity_60min_history", "select distinct ts_code as symbol from ifa2.commodity_60min_history"),
     ("precious_metal_15min_history", "select distinct ts_code as symbol from ifa2.precious_metal_15min_history"),
     ("precious_metal_minute_history", "select distinct ts_code as symbol from ifa2.precious_metal_minute_history"),
+    ("precious_metal_60min_history", "select distinct ts_code as symbol from ifa2.precious_metal_60min_history"),
     ("archive_targets", "select distinct symbol from ifa2.focus_list_items where asset_category in ('futures','commodity','precious_metal')"),
 ]
 
@@ -44,17 +47,13 @@ def root_of(symbol: str) -> str:
 
 def fetch_candidates(conn):
     universe = defaultdict(set)
-    for source_name, sql in SOURCE_QUERIES:
+    for _, sql in SOURCE_QUERIES:
         rows = conn.execute(text(sql)).fetchall()
         for (symbol,) in rows:
             if not symbol:
                 continue
             universe[root_of(symbol)].add(symbol)
     return {k: sorted(v) for k, v in universe.items()}
-
-
-def infer_name(symbol: str) -> str:
-    return symbol
 
 with engine.begin() as conn:
     universe = fetch_candidates(conn)
@@ -81,17 +80,19 @@ with engine.begin() as conn:
         selected = []
         unresolved = []
         for root in roots:
-            for symbol in universe.get(root, []):
+            available = universe.get(root, [])
+            if not available:
+                unresolved.append({'root': root, 'reason': 'no current DB/runtime contract truth found'})
+                continue
+            for symbol in available:
                 if symbol not in selected:
                     selected.append(symbol)
-            if root not in universe:
-                unresolved.append({'root': root, 'reason': 'no current DB/runtime contract truth found'})
         selected = selected[:target_size]
         for i, symbol in enumerate(selected, start=1):
             conn.execute(text(
                 "insert into ifa2.focus_list_items (id, list_id, symbol, name, asset_category, priority, source, notes, is_active, created_at, updated_at) "
                 "values (cast(:id as uuid), cast(:list_id as uuid), :symbol, :name, :asset_category, :priority, 'seed_non_equity_2026-04-16', '', true, now(), now())"
-            ), {'id': str(uuid4()), 'list_id': list_id, 'symbol': symbol, 'name': infer_name(symbol), 'asset_category': asset_type, 'priority': i})
+            ), {'id': str(uuid4()), 'list_id': list_id, 'symbol': symbol, 'name': symbol, 'asset_category': asset_type, 'priority': i})
         missing_slots = max(0, target_size - len(selected))
         if missing_slots:
             unresolved.append({'reason': f'only {len(selected)} resolvable symbols available from current DB/runtime truth', 'missing_slots': missing_slots})
