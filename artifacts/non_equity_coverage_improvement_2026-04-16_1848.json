@@ -1,0 +1,103 @@
+{
+  "lists": [
+    {
+      "list_name": "default_commodity_focus",
+      "asset_category": "commodity",
+      "target_size": 40,
+      "before_count": 4,
+      "after_count": 3,
+      "symbols": [
+        "MA2506.ZCE",
+        "RU2506.SHF",
+        "TA2506.ZCE"
+      ],
+      "unresolved_count": 37
+    },
+    {
+      "list_name": "default_metal_key_focus",
+      "asset_category": "metal",
+      "target_size": 20,
+      "before_count": 8,
+      "after_count": 5,
+      "symbols": [
+        "AL2506.SHF",
+        "CU2506.SHF",
+        "NI2506.SHF",
+        "PB2506.SHF",
+        "ZN2506.SHF"
+      ],
+      "unresolved_count": 15
+    },
+    {
+      "list_name": "default_metal_focus",
+      "asset_category": "metal",
+      "target_size": 40,
+      "before_count": 8,
+      "after_count": 5,
+      "symbols": [
+        "AL2506.SHF",
+        "CU2506.SHF",
+        "NI2506.SHF",
+        "PB2506.SHF",
+        "ZN2506.SHF"
+      ],
+      "unresolved_count": 35
+    },
+    {
+      "list_name": "default_precious_metal_key_focus",
+      "asset_category": "precious_metal",
+      "target_size": 20,
+      "before_count": 4,
+      "after_count": 2,
+      "symbols": [
+        "AG2506.SHF",
+        "AU2506.SHF"
+      ],
+      "unresolved_count": 18
+    },
+    {
+      "list_name": "default_precious_metal_focus",
+      "asset_category": "precious_metal",
+      "target_size": 40,
+      "before_count": 4,
+      "after_count": 2,
+      "symbols": [
+        "AG2506.SHF",
+        "AU2506.SHF"
+      ],
+      "unresolved_count": 38
+    },
+    {
+      "list_name": "default_black_chain_key_focus",
+      "asset_category": "black_chain",
+      "target_size": 20,
+      "before_count": 10,
+      "after_count": 6,
+      "symbols": [
+        "HC2506.SHF",
+        "I2506.DCE",
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM2506.DCE",
+        "RB2506.SHF"
+      ],
+      "unresolved_count": 14
+    },
+    {
+      "list_name": "default_black_chain_focus",
+      "asset_category": "black_chain",
+      "target_size": 40,
+      "before_count": 10,
+      "after_count": 6,
+      "symbols": [
+        "HC2506.SHF",
+        "I2506.DCE",
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM2506.DCE",
+        "RB2506.SHF"
+      ],
+      "unresolved_count": 34
+    }
+  ]
+}
