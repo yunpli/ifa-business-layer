@@ -1,0 +1,120 @@
+{
+  "families": [
+    {
+      "category": "commodity",
+      "mode": "key",
+      "list_name": "default_commodity_key_focus",
+      "count": 4,
+      "symbols": [
+        "SC0",
+        "TA2506.ZCE",
+        "MA2506.ZCE",
+        "RU2506.SHF"
+      ]
+    },
+    {
+      "category": "commodity",
+      "mode": "focus",
+      "list_name": "default_commodity_focus",
+      "count": 4,
+      "symbols": [
+        "SC0",
+        "TA2506.ZCE",
+        "MA2506.ZCE",
+        "RU2506.SHF"
+      ]
+    },
+    {
+      "category": "metal",
+      "mode": "key",
+      "list_name": "default_metal_key_focus",
+      "count": 8,
+      "symbols": [
+        "CU0",
+        "CU2506.SHF",
+        "AL0",
+        "AL2506.SHF",
+        "ZN0",
+        "ZN2506.SHF",
+        "NI2506.SHF",
+        "PB2506.SHF"
+      ]
+    },
+    {
+      "category": "metal",
+      "mode": "focus",
+      "list_name": "default_metal_focus",
+      "count": 8,
+      "symbols": [
+        "CU0",
+        "CU2506.SHF",
+        "AL0",
+        "AL2506.SHF",
+        "ZN0",
+        "ZN2506.SHF",
+        "NI2506.SHF",
+        "PB2506.SHF"
+      ]
+    },
+    {
+      "category": "precious_metal",
+      "mode": "key",
+      "list_name": "default_precious_metal_key_focus",
+      "count": 4,
+      "symbols": [
+        "AU0",
+        "AU2506.SHF",
+        "AG0",
+        "AG2506.SHF"
+      ]
+    },
+    {
+      "category": "precious_metal",
+      "mode": "focus",
+      "list_name": "default_precious_metal_focus",
+      "count": 4,
+      "symbols": [
+        "AU0",
+        "AU2506.SHF",
+        "AG0",
+        "AG2506.SHF"
+      ]
+    },
+    {
+      "category": "black_chain",
+      "mode": "key",
+      "list_name": "default_black_chain_key_focus",
+      "count": 10,
+      "symbols": [
+        "RB0",
+        "RB2506.SHF",
+        "HC0",
+        "HC2506.SHF",
+        "I0",
+        "I2506.DCE",
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM0",
+        "JM2506.DCE"
+      ]
+    },
+    {
+      "category": "black_chain",
+      "mode": "focus",
+      "list_name": "default_black_chain_focus",
+      "count": 10,
+      "symbols": [
+        "RB0",
+        "RB2506.SHF",
+        "HC0",
+        "HC2506.SHF",
+        "I0",
+        "I2506.DCE",
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM0",
+        "JM2506.DCE"
+      ]
+    }
+  ]
+}

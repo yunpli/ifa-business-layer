@@ -1,0 +1,208 @@
+{
+  "roots": {
+    "AU": {
+      "futures_history": [
+        "AU2506.SHF"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [
+        "AU2506.SHF"
+      ],
+      "precious_metal_minute_history": [
+        "AU2506.SHF"
+      ],
+      "precious_metal_60min_history": [
+        "AU2506.SHF"
+      ]
+    },
+    "AG": {
+      "futures_history": [
+        "AG2506.SHF"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [
+        "AG2506.SHF"
+      ],
+      "precious_metal_minute_history": [
+        "AG2506.SHF"
+      ],
+      "precious_metal_60min_history": [
+        "AG2506.SHF"
+      ]
+    },
+    "HC": {
+      "futures_history": [
+        "HC2506.SHF"
+      ],
+      "commodity_15min_history": [
+        "HC2506.SHF"
+      ],
+      "commodity_minute_history": [
+        "HC2506.SHF"
+      ],
+      "commodity_60min_history": [
+        "HC2506.SHF"
+      ],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "NI": {
+      "futures_history": [
+        "NI2506.SHF"
+      ],
+      "commodity_15min_history": [
+        "NI2506.SHF"
+      ],
+      "commodity_minute_history": [
+        "NI2506.SHF"
+      ],
+      "commodity_60min_history": [
+        "NI2506.SHF"
+      ],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "CU": {
+      "futures_history": [
+        "CU2506.SHF"
+      ],
+      "commodity_15min_history": [
+        "CU2506.SHF"
+      ],
+      "commodity_minute_history": [
+        "CU2506.SHF"
+      ],
+      "commodity_60min_history": [
+        "CU2506.SHF"
+      ],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "AL": {
+      "futures_history": [
+        "AL2506.SHF"
+      ],
+      "commodity_15min_history": [
+        "AL2506.SHF"
+      ],
+      "commodity_minute_history": [
+        "AL2506.SHF"
+      ],
+      "commodity_60min_history": [
+        "AL2506.SHF"
+      ],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "ZN": {
+      "futures_history": [
+        "ZN2506.SHF"
+      ],
+      "commodity_15min_history": [
+        "ZN2506.SHF"
+      ],
+      "commodity_minute_history": [
+        "ZN2506.SHF"
+      ],
+      "commodity_60min_history": [
+        "ZN2506.SHF"
+      ],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "RB": {
+      "futures_history": [
+        "RB2506.SHF"
+      ],
+      "commodity_15min_history": [
+        "RB2506.SHF"
+      ],
+      "commodity_minute_history": [
+        "RB2506.SHF"
+      ],
+      "commodity_60min_history": [
+        "RB2506.SHF"
+      ],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "I": {
+      "futures_history": [
+        "I2506.DCE"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "J": {
+      "futures_history": [
+        "J2506.DCE",
+        "J2509.DCE",
+        "JM2506.DCE"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "JM": {
+      "futures_history": [
+        "JM2506.DCE"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "MA": {
+      "futures_history": [
+        "MA2506.ZCE"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "TA": {
+      "futures_history": [
+        "TA2506.ZCE"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    },
+    "RU": {
+      "futures_history": [
+        "RU2506.SHF"
+      ],
+      "commodity_15min_history": [],
+      "commodity_minute_history": [],
+      "commodity_60min_history": [],
+      "precious_metal_15min_history": [],
+      "precious_metal_minute_history": [],
+      "precious_metal_60min_history": []
+    }
+  }
+}
