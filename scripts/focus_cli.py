@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from ifa_business_layer.constants import OWNER_ID_DEFAULT, OWNER_TYPE_DEFAULT
+from ifa_business_layer.constants import LIST_TYPE_FOCUS, LIST_TYPE_KEY_FOCUS
 from ifa_business_layer.defaults import build_default_specs
 from ifa_business_layer.repository import BusinessLayerRepository
 from ifa_business_layer.schema import create_schema
@@ -24,7 +25,14 @@ def cmd_seed_default(args):
     repo = _repo()
     create_schema()
     stock_candidates = repo.fetch_stock_candidates(limit=400)
-    for spec in build_default_specs(stock_candidates):
+    specs = build_default_specs(stock_candidates)
+    repo.delete_lists_not_in(
+        owner_type=OWNER_TYPE_DEFAULT,
+        owner_id=OWNER_ID_DEFAULT,
+        allowed_names=[spec.name for spec in specs],
+        list_types=[LIST_TYPE_KEY_FOCUS, LIST_TYPE_FOCUS],
+    )
+    for spec in specs:
         list_id = repo.upsert_list(
             owner_type=OWNER_TYPE_DEFAULT,
             owner_id=OWNER_ID_DEFAULT,
@@ -34,9 +42,8 @@ def cmd_seed_default(args):
             frequency_type=spec.frequency_type,
             description=spec.description,
         )
-        for k, v in spec.rules.items():
-            repo.upsert_rule(list_id=list_id, rule_key=k, rule_value=v)
-        repo.bulk_upsert_items(list_id, spec.items)
+        repo.replace_rules(list_id, spec.rules)
+        repo.replace_items(list_id, spec.items)
         print(json.dumps({"name": spec.name, "list_id": list_id, "items": len(spec.items)}, ensure_ascii=False))
 
 

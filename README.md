@@ -2,53 +2,50 @@
 
 ## Purpose
 
-`ifa-business-layer` is the independent business-control repository for iFA Business Layer Phase 1.
-It manages business objects only, not data collection runtime logic.
+`ifa-business-layer` owns the business-layer focus objects for iFA.
+It manages owner-scoped focus/key-focus families and archive-target maintenance, not collection runtime.
 
-Phase 1 scope:
-- key focus
-- focus
-- archive targets
-- tech-only focus subsets (`tech_key_focus`, `tech_focus`)
-- owner-scoped defaults
-- maintenance CLI
-- schema baseline for the business-layer-managed objects
+## Phase-1 focus families
 
-Phase 1 default owner:
+Canonical owner scope:
 - `owner_type=default`
 - `owner_id=default`
 
-## Unified venv rule
+Seeded focus families:
+- `default_stock_key_focus`
+- `default_stock_focus`
+- `default_macro_key_focus`
+- `default_macro_focus`
+- `default_tech_key_focus`
+- `default_tech_focus`
+- `default_asset_key_focus`
+- `default_asset_focus`
 
-This repo must reuse the existing iFA standard environment:
-- `/Users/neoclaw/repos/ifa-data-platform/.venv`
+Archive targets remain available:
+- `default_archive_targets_minute`
+- `default_archive_targets_15min`
+- `default_archive_targets_daily`
 
-Rules:
-- do not create a dedicated business-layer venv
-- run development, CLI, and tests in the shared unified venv
-- if dependencies are missing, add them to the unified venv only
+## Data model
 
-## Database / schema requirements
-
-Database:
-- `ifa_db`
-
-Schema:
-- `ifa2`
-
-Business Layer Phase 1 currently manages these tables:
+Managed tables:
 - `ifa2.focus_lists`
 - `ifa2.focus_list_items`
 - `ifa2.focus_list_rules`
 
-Schema initialization remains idempotent for now:
-- `scripts/focus_cli.py init-schema`
+Key conventions:
+- all default business objects use owner=`default/default`
+- stock family is seeded from A-share symbols only, because current Tushare-backed tables in `ifa2` expose `stock_basic_current` but do not expose an equivalent HK/US stock universe here
+- tech family is a thematic stock subset with `asset_type=tech` and item category `tech`
+- asset family uses stable rolling canonical concepts (`AU0`, `CU0`, `SC0`, `M0`, `TA0`, etc.), never dated contracts
+- asset phase-1 sub-buckets explicitly include `precious_metal`, `base_metal`, `energy`, `black_chain`, `agri`, `chemicals`
 
-Migration/history baseline:
-- `docs/MIGRATION_BASELINE.md`
-- `sql/001_business_layer_baseline.sql`
+## Unified venv rule
 
-## Supported CLI commands
+Use the shared environment only:
+- `/Users/neoclaw/repos/ifa-data-platform/.venv`
+
+## CLI
 
 Primary maintenance CLI:
 - `scripts/focus_cli.py`
@@ -65,37 +62,40 @@ Commands:
 - `bulk-upsert`
 - `bulk-delete`
 
-These cover:
-- list CRUD
-- item CRUD
-- batch item upsert/delete
-- maintenance of key focus / focus / archive target objects
-- inspection/maintenance of tech-only lists through the same workflow
+Examples:
 
-## Package layout
+```bash
+DATABASE_URL='postgresql+psycopg2://neoclaw@/ifa_db?host=/tmp' \
+IFA_DB_SCHEMA=ifa2 \
+PYTHONPATH=/Users/neoclaw/repos/ifa-business-layer \
+/Users/neoclaw/repos/ifa-data-platform/.venv/bin/python scripts/focus_cli.py init-schema
 
-This repo uses one clear package layout only:
-- root package: `ifa_business_layer/`
+DATABASE_URL='postgresql+psycopg2://neoclaw@/ifa_db?host=/tmp' \
+IFA_DB_SCHEMA=ifa2 \
+PYTHONPATH=/Users/neoclaw/repos/ifa-business-layer \
+/Users/neoclaw/repos/ifa-data-platform/.venv/bin/python scripts/focus_cli.py seed-default
+```
 
-No parallel `src/` package layout should remain after cleanup.
+Inspect a seeded family:
 
-## Intentionally out of scope in Phase 1
+```bash
+DATABASE_URL='postgresql+psycopg2://neoclaw@/ifa_db?host=/tmp' \
+IFA_DB_SCHEMA=ifa2 \
+PYTHONPATH=/Users/neoclaw/repos/ifa-business-layer \
+/Users/neoclaw/repos/ifa-data-platform/.venv/bin/python scripts/focus_cli.py list-items --name default_asset_focus
+```
 
-The following are intentionally NOT included in this phase:
-- lowfreq data collection development
-- midfreq data collection development
-- archive collection/runtime development
-- new frequency granularities beyond minute / 15min / daily
-- customer-specific owner expansion beyond schema/documentation readiness
-- collection-layer consumption integration
+## Seeding behavior
 
-## Notes
+`seed-default` is idempotent and replace-style:
+- upserts the canonical default families
+- fully replaces rules/items for each seeded list
+- removes legacy default owner `focus` / `key_focus` lists that are no longer part of the canonical set
+- keeps archive-target lists under the same owner scope
 
-Technology-only concept is represented within the existing model as dedicated stock-only lists under the canonical owner scope:
-- `tech_key_focus` (`list_type=key_focus`, `asset_type=stock`)
-- `tech_focus` (`list_type=focus`, `asset_type=stock`)
+## Documentation
 
-Seed selection logic is pragmatic/manual for Phase 1: a curated A-share technology list spanning semiconductors, AI compute, software, optics, electronics, industrial automation, and platform/infrastructure names. Overlap with broader default lists is allowed by design in this phase.
-
-Business Layer Phase 1 is functionally complete for its requested scope.
-This repo should now be treated as the owner of the business-layer object model and maintenance surface, while data collection remains outside scope until a later phase.
+Implementation notes:
+- `docs/BUSINESS_LAYER_FOCUS_FAMILIES_V2.md`
+- `docs/MIGRATION_BASELINE.md`
+- `docs/BUSINESS_LAYER_DESIGN.md`

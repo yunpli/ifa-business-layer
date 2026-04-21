@@ -82,6 +82,22 @@ class BusinessLayerRepository:
         with self.engine.begin() as conn:
             return conn.execute(text(sql), {"owner_type": owner_type, "owner_id": owner_id, "name": name}).rowcount
 
+    def delete_lists_not_in(self, *, owner_type: str, owner_id: str, allowed_names: Iterable[str], list_types: Iterable[str]):
+        sql = f"""
+        DELETE FROM {self.schema}.focus_lists
+        WHERE owner_type=:owner_type
+          AND owner_id=:owner_id
+          AND list_type = ANY(:list_types)
+          AND NOT (name = ANY(:allowed_names))
+        """
+        with self.engine.begin() as conn:
+            return conn.execute(text(sql), {
+                "owner_type": owner_type,
+                "owner_id": owner_id,
+                "allowed_names": list(allowed_names),
+                "list_types": list(list_types),
+            }).rowcount
+
     def list_items(self, list_id: str):
         sql = f"""
         SELECT id, list_id, symbol, name, asset_category, priority, source, notes, is_active
@@ -113,6 +129,29 @@ class BusinessLayerRepository:
                 "priority": priority, "source": source, "notes": notes, "is_active": is_active,
             }).scalar_one())
 
+    def replace_items(self, list_id: str, items: Iterable[dict]):
+        with self.engine.begin() as conn:
+            conn.execute(text(f"DELETE FROM {self.schema}.focus_list_items WHERE list_id=:list_id"), {"list_id": list_id})
+            for item in items:
+                if item["asset_category"] not in ALLOWED_ASSET_CATEGORIES:
+                    raise ValueError(f"invalid asset_category: {item['asset_category']}")
+                conn.execute(text(f"""
+                    INSERT INTO {self.schema}.focus_list_items (
+                        list_id, symbol, name, asset_category, priority, source, notes, is_active
+                    ) VALUES (
+                        :list_id, :symbol, :name, :asset_category, :priority, :source, :notes, :is_active
+                    )
+                """), {
+                    "list_id": list_id,
+                    "symbol": item["symbol"],
+                    "name": item["name"],
+                    "asset_category": item["asset_category"],
+                    "priority": item["priority"],
+                    "source": item.get("source", "default"),
+                    "notes": item.get("notes", ""),
+                    "is_active": item.get("is_active", True),
+                })
+
     def bulk_upsert_items(self, list_id: str, items: Iterable[dict]):
         ids = []
         for item in items:
@@ -140,6 +179,15 @@ class BusinessLayerRepository:
         """
         with self.engine.begin() as conn:
             conn.execute(text(sql), {"list_id": list_id, "rule_key": rule_key, "rule_value": rule_value})
+
+    def replace_rules(self, list_id: str, rules: dict[str, str]):
+        with self.engine.begin() as conn:
+            conn.execute(text(f"DELETE FROM {self.schema}.focus_list_rules WHERE list_id=:list_id"), {"list_id": list_id})
+            for rule_key, rule_value in rules.items():
+                conn.execute(text(f"""
+                    INSERT INTO {self.schema}.focus_list_rules (list_id, rule_key, rule_value)
+                    VALUES (:list_id, :rule_key, :rule_value)
+                """), {"list_id": list_id, "rule_key": rule_key, "rule_value": rule_value})
 
     def list_rules(self, list_id: str):
         sql = f"SELECT rule_key, rule_value FROM {self.schema}.focus_list_rules WHERE list_id=:list_id ORDER BY rule_key"
