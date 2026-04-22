@@ -219,4 +219,6 @@ Phase 1 主 Agent 的可靠性边界必须与当前数据现实一致：
 
 详细边界见：
 
+- `/Users/neoclaw/repos/ifa-business-layer/docs/A_SHARE_EARLY_MID_LATE_DATA_CONSUMPTION_CONTRACT_V1.md`
 - `/Users/neoclaw/repos/ifa-data-platform/docs/A_SHARE_REPORT_DATA_CONSUMPTION_AND_EVIDENCE_BOUNDARY_V1.md`
+- `/Users/neoclaw/repos/ifa-data-platform/docs/A_SHARE_REPORT_SLOT_DATA_CONTRACT_V1.md`
