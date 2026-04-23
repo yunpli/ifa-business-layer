@@ -1,3 +1,4 @@
+from .ai_tech import EarlyAITechSupportProducer, LateAITechSupportProducer, AITechSupportProducer
 from .macro import EarlyMacroSupportProducer, LateMacroSupportProducer, MacroSupportProducer
 from .types import (
     SupportBundle,
@@ -9,6 +10,9 @@ from .types import (
 )
 
 __all__ = [
+    "EarlyAITechSupportProducer",
+    "LateAITechSupportProducer",
+    "AITechSupportProducer",
     "EarlyMacroSupportProducer",
     "LateMacroSupportProducer",
     "MacroSupportProducer",
