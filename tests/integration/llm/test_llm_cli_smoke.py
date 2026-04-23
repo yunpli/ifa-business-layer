@@ -11,6 +11,7 @@ CLI = REPO / 'scripts' / 'ifa_llm_cli.py'
 
 def test_cli_requires_key_for_live_models():
     env = os.environ.copy()
+    env['PYTHONPATH'] = str(REPO)
     env.pop('JMR_API_KEY', None)
     proc = subprocess.run(
         [str(PYTHON), str(CLI), '--model', 'grok41_expert', '--prompt', 'Who are you?'],
