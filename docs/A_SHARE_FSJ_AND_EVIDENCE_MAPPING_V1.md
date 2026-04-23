@@ -237,6 +237,74 @@ Phase 1 不要求立刻做成复杂对象数据库，但至少应保证：
 
 ---
 
+## 8.1 LLM-assisted FSJ mapping 原则（新增冻结）
+
+当 FSJ mapping 进入“多来源摘要、近重复合并、冲突证据整理、section synthesis”这类高语义工作时，Phase 1 明确允许引入 business-layer 的 LLM utility，并优先使用：
+
+- `scripts/ifa_llm_cli.py`
+- `ifa_business_layer.llm.service.LLMService`
+- model alias: `grok41_thinking`
+- configured model id: `grok-4.1-thinking`
+
+`grok41_thinking` 在 FSJ pipeline 中的定位固定为：**reasoning / synthesis assist**，不是 evidence owner，不是 schema owner，也不是 persistence owner。
+
+推荐且预期的 LLM 参与 stage：
+
+1. **fact compression / summarization**  
+   - 把多条同主题 observed facts 压缩成“候选 fact cluster summary”，但不能删除 source locator。  
+2. **candidate signal extraction**  
+   - 从 fact clusters 中提出可能的 strengthening / weakening / divergence / confirmation / risk。  
+3. **dedup / merge recommendation**  
+   - 识别同义 judgment 草案、近重复叙述、表述冲突。  
+4. **contradiction resolution memo**  
+   - 对“支持证据 vs 风险证据”给出结构化冲突摘要与建议方向。  
+5. **section synthesis draft**  
+   - 生成最终面向 section 的 judgment 候选文本草稿。  
+
+不应交给 LLM 的部分：
+
+- source table / row locator 的保真维护
+- evidence 等级（E1/E2/E3/E4）的最终硬约束
+- 空证据下强行生成正式 judgment
+- bundle/object/edge 的最终幂等键与写库行为
+- active / superseded / withdrawn 的最终版本状态判定
+- producer/read-model/query-path 的确定性装配与持久化提交
+
+### 8.1.1 确定性边界（冻结）
+
+只要进入以下边界，就必须回到 deterministic code path，不能继续把决定权留给 `grok41_thinking`：
+
+- bundle 主维度生成
+- `object_key` / edge key / idempotent key 生成
+- evidence link / observed record / lineage edge 的最终写入
+- evidence 等级与降级模式的最终判定
+- FSJ bundle 的落库、回读、active version 选择
+
+也就是说：
+
+> **Grok 可以产出候选语义表示；最终进入 FSJ graph 的结构、键、边、状态，必须由确定性代码收口。**
+
+### 8.1.2 审计与输出结构要求（冻结）
+
+凡使用 `grok41_thinking` 参与某个 FSJ stage，至少应保留以下审计位：
+
+- `llm_model_alias = grok41_thinking`
+- `llm_model_id = grok-4.1-thinking`
+- `llm_prompt_version`
+- `llm_stage`（例如 `fact_compression` / `signal_extraction` / `section_synthesis`）
+- `llm_input_scope`（输入证据范围或其可追溯摘要/哈希）
+- `llm_output_schema_name` 或结构约定版本
+- `llm_adoption_result`（accepted / partially_adopted / rejected）
+
+同时要求 LLM 输出优先采用**结构化候选对象**而不是自由散文，至少应能恢复为：
+
+- candidate facts / candidate signals / candidate judgments
+- candidate links（谁基于谁）
+- conflict / uncertainty notes
+- draft section text（如果该 stage 是 synthesis）
+
+如果输出无法恢复到上述结构，就不能直接进入正式 FSJ persistence path。
+
 ## 9. Phase 1 与后续阶段的边界
 
 ## Phase 1 内
@@ -244,6 +312,7 @@ Phase 1 不要求立刻做成复杂对象数据库，但至少应保证：
 - 定义 section evidence minimum
 - 定义 evidence quality levels
 - 定义 degrade 原则
+- 定义 LLM-assisted mapping 的允许边界、推荐 stage 与审计要求
 
 ## 后续阶段
 - FSJ 对象标准化落库

@@ -20,6 +20,7 @@ _日期：2026-04-22_
 - `docs/A_SHARE_SUPPORT_AGENTS_DELIVERY_CONTRACT.md`
 - `docs/A_SHARE_EARLY_MID_LATE_DATA_CONSUMPTION_CONTRACT_V1.md`
 - `docs/A_SHARE_FSJ_AND_EVIDENCE_MAPPING_V1.md`
+- `docs/A_SHARE_FSJ_LLM_ASSIST_POLICY_PHASE1_2026-04-22.md`
 - `/Users/neoclaw/repos/ifa-data-platform/docs/A_SHARE_FSJ_LOCAL_PERSISTENCE_STRATEGY_PHASE1_2026-04-22.md`
 
 ---
@@ -378,6 +379,80 @@ Phase 1 不要求 data-platform 立刻实现完整双写模型，但业务合同
 
 ---
 
+## 7.4 LLM 参与边界（Phase 1 冻结口径）
+
+FSJ Phase 1 允许在 **business-layer 内部** 使用 LLM 参与“语义提升”步骤，但必须满足以下冻结约束：
+
+- **指定工具**：优先使用 business repo 已实现并已验证的 LLM utility：
+  - service: `ifa_business_layer.llm.service.LLMService`
+  - CLI: `scripts/ifa_llm_cli.py`
+  - model alias: `grok41_thinking`
+  - configured model id: `grok-4.1-thinking`
+- **允许且预期的任务类型**：
+  - 多来源事实摘要/压缩
+  - 候选 signal/judgment 提取
+  - 近重复叙述去重与 merge 建议
+  - 冲突证据整理与 contradiction resolution 建议
+  - section synthesis 草稿
+- **不允许外包给 LLM 的确定性职责**：
+  - bundle 主维度/幂等键生成
+  - `fact -> signal -> judgment` 边的最终落盘结构
+  - source locator / evidence link / observed record 的保真写入
+  - active/superseded/withdrawn 版本语义
+  - `judgment_action` / `direction` / `priority` 的无证据瞎改写
+  - producer persistence path / query path / active bundle selection
+- **最终业务 owner 仍是 business-layer**：LLM 可以给出候选业务表示，但不能跳过合同字段与 lineage discipline。
+
+因此本合同补充冻结为：
+
+> **`grok41_thinking` 是 FSJ 的 reasoning/synthesis assist layer，不是 schema owner，不是 lineage owner，也不是最终业务语义 owner。**
+
+### 7.4.1 从 LLM 到持久化的收口纪律
+
+LLM 的输出只能是 **candidate business representation**，不能直接视为 persistence-ready bundle。
+
+进入正式 FSJ 落盘前，必须由 deterministic business/data code 明确完成：
+
+- bundle/object/edge 的稳定键生成
+- evidence level 与 degrade mode 的最终判定
+- lineage edges 与 evidence links 的最终归并
+- active/superseded/withdrawn 状态落定
+- `FSJStore` 持久化提交与回读校验
+
+这条纪律适用于 early / mid / late 全部 slot。
+
+### 7.4.2 Prompt 版本与输出结构要求
+
+凡使用 `grok41_thinking` 参与 FSJ 生产，审计面至少必须能回答以下问题：
+
+- 用的是哪个 model alias / model id
+- 用的是哪个 prompt version
+- 该次调用属于哪个 FSJ stage
+- 输入证据范围是什么
+- 产出的候选结构是什么
+- 最终是否被采纳，以及采纳到什么程度
+
+因此至少应保留这些审计位：
+
+- `llm_model_alias`
+- `llm_model_id`
+- `llm_prompt_version`
+- `llm_stage`
+- `llm_input_scope`
+- `llm_output_schema_name` 或等价结构版本
+- `llm_adoption_result`
+
+Phase 1 推荐 `grok41_thinking` 输出使用结构化结果，而不是只返回自由散文。最低应可恢复为：
+
+- candidate facts
+- candidate signals
+- candidate judgments
+- candidate lineage/link hints
+- conflict / uncertainty notes
+- optional section draft
+
+若输出不能恢复到上述结构，则只能作为人工参考，不应直接进入正式 FSJ persistence contract。
+
 ## 8. Phase 1 必做 vs 明确后置
 
 ## 8.1 Phase 1 必做
@@ -388,6 +463,7 @@ Phase 1 不要求 data-platform 立刻实现完整双写模型，但业务合同
 4. 明确 active / superseded / withdrawn 三种版本状态。  
 5. 明确 observed evidence 不得丢失到无法追溯。  
 6. 明确 FSJ 是 business semantic layer，不等于 source archive，不等于 report markdown。  
+7. 若使用 LLM 辅助 FSJ 装配，必须保留 prompt/version/model alias/输入证据范围/输出采纳结果的审计位。  
 
 ## 8.2 Phase 1 明确不要求
 
@@ -415,4 +491,4 @@ Phase 1 不要求 data-platform 立刻实现完整双写模型，但业务合同
 
 A 股 2.0 的 Phase 1 FSJ 持久化合同已经明确为：
 
-> **business-layer 输出的是带 bundle 元数据、对象级必填字段、fact-signal-judgment 边关系、以及与 slot replay / Archive V2 / source evidence / report artifact 可链接的标准业务对象；data-platform 负责稳定落盘与查询，不改写业务语义。**
+> **business-layer 输出的是带 bundle 元数据、对象级必填字段、fact-signal-judgment 边关系、以及与 slot replay / Archive V2 / source evidence / report artifact 可链接的标准业务对象；当语义提升/摘要/去重/综合推理需要 LLM 时，优先通过 business-layer 的 `grok41_thinking` 工具完成，但 data-platform 仍只负责稳定落盘与查询，不改写业务语义。**
