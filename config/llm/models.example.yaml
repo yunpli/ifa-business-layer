@@ -1,3 +1,10 @@
+fsj_budget_policy:
+  require_pricing_for_all_usage: true
+  max_total_tokens_per_artifact: 12000
+  max_total_tokens_fleet: 40000
+  max_fallback_rate: 0.50
+  max_degraded_rate: 0.50
+
 models:
   grok41_expert:
     provider: jmr-oai
