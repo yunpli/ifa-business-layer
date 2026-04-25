@@ -5,6 +5,17 @@ fsj_budget_policy:
   max_fallback_rate: 0.50
   max_degraded_rate: 0.50
 
+fsj_assist_policy:
+  policy_version: fsj_assist_model_policy_v1
+  strategy_name: fsj_main_and_support_strict_gateway
+  primary_model_alias: grok41_expert
+  fallback_model_aliases: [grok41_thinking, gemini31_pro_jmr]
+  notes:
+    - business-layer gateway remains the only formal business LLM path
+    - grok41_expert is preferred for stricter synthesis quality when configured
+    - grok41_thinking is the first fallback before gemini31_pro_jmr
+    - deterministic degrade remains mandatory when all configured attempts fail
+
 models:
   grok41_expert:
     provider: jmr-oai

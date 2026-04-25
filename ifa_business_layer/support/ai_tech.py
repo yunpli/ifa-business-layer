@@ -32,7 +32,7 @@ class SupportsInvoke(Protocol):
 class AITechSupportProducer:
     slot: str
     llm_service: SupportsInvoke | None = None
-    model_alias: str = "grok41_thinking"
+    model_alias: str = "grok41_expert"
 
     def produce(self, *, business_date: str, evidence_items: list[dict[str, Any]]) -> SupportPayload:
         if self.slot not in {"early", "late"}:
@@ -319,10 +319,10 @@ class AITechSupportProducer:
 
 
 class EarlyAITechSupportProducer(AITechSupportProducer):
-    def __init__(self, llm_service: SupportsInvoke | None = None, model_alias: str = "grok41_thinking") -> None:
+    def __init__(self, llm_service: SupportsInvoke | None = None, model_alias: str = "grok41_expert") -> None:
         super().__init__(slot="early", llm_service=llm_service, model_alias=model_alias)
 
 
 class LateAITechSupportProducer(AITechSupportProducer):
-    def __init__(self, llm_service: SupportsInvoke | None = None, model_alias: str = "grok41_thinking") -> None:
+    def __init__(self, llm_service: SupportsInvoke | None = None, model_alias: str = "grok41_expert") -> None:
         super().__init__(slot="late", llm_service=llm_service, model_alias=model_alias)
